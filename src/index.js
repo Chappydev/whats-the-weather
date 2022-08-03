@@ -36,8 +36,8 @@ const whenSignedIn = document.getElementById("when-signed-in");
 const whenSignedOut = document.getElementById("when-signed-out");
 const signInBtn = document.getElementById("sign-in-btn");
 const signOutBtn = document.getElementById("sign-out-btn");
-
-const userDetails = document.getElementById("user-details");
+const playBtn = document.querySelector("#play-btn");
+const gameSection = document.getElementById("game");
 
 
 // Sign-in with the sign-in button
@@ -47,7 +47,6 @@ signInBtn.addEventListener('click', e => {
 
 signOutBtn.addEventListener('click', e => {
   signOut(auth);
-  console.log("test");
 })
 
 onAuthStateChanged(auth, user => {
@@ -56,9 +55,14 @@ onAuthStateChanged(auth, user => {
     // display user-only stuff on home page
     whenSignedIn.hidden = false;
     whenSignedOut.hidden = true;
+    playBtn.removeAttribute("disabled");
+    // TODO: make game-start button work when signed in
   } else {
     // Only offer default info and encourage them to sign in
     whenSignedIn.hidden = true;
     whenSignedOut.hidden = false;
+    gameSection.hidden = true;
+    playBtn.setAttribute("disabled", "")
+    // TODO: make game-start button NOT work when not signed in
   }
 })

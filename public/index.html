@@ -12,17 +12,26 @@
 
   <section id="when-signed-out">
 
-    <h1>What's the Weather?</h1>
-
     <button id="sign-in-btn">Sign In With Google</button>
 
   </section>
   
   <section id="when-signed-in" hidden="true">
 
-    <div id="user-details"></div>
+    <header id="header">
+      <!-- Logo, signup, or user info and signout info go here -->
+      <button id="sign-out-btn">Sign Out</button>
+    </header>
 
-    <button id="sign-out-btn">Sign Out</button>
+    <h1 id="title">What's the Weather?</h1>
+
+    <div id="game-option-container">
+      <h2>Classic game-mode</h2>
+      <p>Guess the weather in random locations
+        around the world and collect points and 
+        achievements along the way!</p>
+      <button id="play-btn" disabled>Play Now</button>
+    </div>
 
   </section>
 

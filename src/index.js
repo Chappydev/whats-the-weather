@@ -7,7 +7,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getAuth, getRedirectResult, GoogleAuthProvider, signInWithRedirect, onAuthStateChanged } from "firebase/auth";
+import { getAuth, getRedirectResult, GoogleAuthProvider, signInWithRedirect, signOut, onAuthStateChanged } from "firebase/auth";
 import { doc, getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
@@ -32,18 +32,23 @@ const firestore = getFirestore(firebaseApp);
 console.log(firebaseApp);
 console.log(auth);
 
-const whenSignedIn = document.getElementById("whenSignedIn");
-const whenSignedOut = document.getElementById("whenSignedOut");
-const signInBtn = document.getElementById("signInBtn");
-const signOutBtn = document.getElementById("signOutBtn");
+const whenSignedIn = document.getElementById("when-signed-in");
+const whenSignedOut = document.getElementById("when-signed-out");
+const signInBtn = document.getElementById("sign-in-btn");
+const signOutBtn = document.getElementById("sign-out-btn");
 
-const userDetails = document.getElementById("userDetails");
+const userDetails = document.getElementById("user-details");
 
 
 // Sign-in with the sign-in button
 signInBtn.addEventListener('click', e => {
   signInWithRedirect(auth, provider);
 });
+
+signOutBtn.addEventListener('click', e => {
+  signOut(auth);
+  console.log("test");
+})
 
 onAuthStateChanged(auth, user => {
   console.log(user);

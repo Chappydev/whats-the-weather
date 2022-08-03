@@ -7,7 +7,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, getRedirectResult, GoogleAuthProvider, signInWithRedirect, onAuthStateChanged } from "firebase/auth";
 import { doc, getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
@@ -40,23 +40,20 @@ const signOutBtn = document.getElementById("signOutBtn");
 const userDetails = document.getElementById("userDetails");
 
 
+// Sign-in with the sign-in button
 signInBtn.addEventListener('click', e => {
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    // The signed-in user info.
-    const user = result.user;
-    // ...
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    // ...
-  })
+  signInWithRedirect(auth, provider);
 });
+
+onAuthStateChanged(auth, user => {
+  console.log(user);
+  if (user) {
+    // display user-only stuff on home page
+    whenSignedIn.hidden = false;
+    whenSignedOut.hidden = true;
+  } else {
+    // Only offer default info and encourage them to sign in
+    whenSignedIn.hidden = true;
+    whenSignedOut.hidden = false;
+  }
+})

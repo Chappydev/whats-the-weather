@@ -81,3 +81,46 @@ select {
 
 /* RESET ENDS */
 
+:root {
+  font-size: 20px;
+}
+
+h2 {
+  font-size: 1.3rem;
+}
+
+
+/* Homepage (when signed in) */
+#when-signed-in {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#title {
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+#header {
+  display: flex;
+  justify-content: space-between;
+  align-self: stretch;
+  height: 60px;
+}
+
+#game-option-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 1000px;
+  padding: 1em;
+  h2,
+  p {
+    text-align: center;
+  }
+  #play-btn {
+    align-self: flex-end;
+  }
+}

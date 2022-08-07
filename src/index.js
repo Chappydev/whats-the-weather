@@ -7,8 +7,8 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getAuth, getRedirectResult, GoogleAuthProvider, signInWithRedirect, signOut, onAuthStateChanged } from "firebase/auth";
-import { doc, getFirestore } from "firebase/firestore";
+import { getAuth, getRedirectResult, GoogleAuthProvider, signInWithRedirect, signOut, onAuthStateChanged, OperationType } from "firebase/auth";
+import { getFirestore, collection, doc, setDoc } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -27,7 +27,8 @@ const firebaseApp = initializeApp(firebaseConfig);
 const analytics = getAnalytics(firebaseApp);
 const auth = getAuth(firebaseApp);
 const provider = new GoogleAuthProvider();
-const firestore = getFirestore(firebaseApp);
+const db = getFirestore(firebaseApp);
+const users = collection(db, 'users');
 
 console.log(firebaseApp);
 console.log(auth);
@@ -41,15 +42,15 @@ const gameSection = document.getElementById("game");
 
 
 // Sign-in with the sign-in button
-signInBtn.addEventListener('click', e => {
-  signInWithRedirect(auth, provider);
+signInBtn.addEventListener('click', async function(e) {
+  await signInWithRedirect(auth, provider);
 });
 
 signOutBtn.addEventListener('click', e => {
   signOut(auth);
 })
 
-onAuthStateChanged(auth, user => {
+onAuthStateChanged(auth, async (user) => {
   console.log(user);
   if (user) {
     // display user-only stuff on home page
@@ -57,6 +58,13 @@ onAuthStateChanged(auth, user => {
     whenSignedOut.hidden = true;
     playBtn.removeAttribute("disabled");
     // TODO: make game-start button work when signed in
+
+    // TODO: determine the appropriate if condition for this
+    setDoc(doc(db, 'users', user.uid), {
+      achievements: []
+    })
+    
+    
   } else {
     // Only offer default info and encourage them to sign in
     whenSignedIn.hidden = true;

@@ -27,9 +27,9 @@ function makeElement(tag, text, ...attributes) {
     } else if (isId) {
       newElement.id = att.slice(1);
     } else {
-      const attributeReg = /^.+=/;
+      const attributeReg = /.+?=/;
       const valueReg = /=.+/;
-      const [ attribute, value ] = [ att.match(attributeReg).replace('=', ''), att.match(valueReg).slice(1) ];
+      const [ attribute, value ] = [ att.match(attributeReg)[0].replace('=', ''), att.match(valueReg)[0].slice(1) ];
       newElement.setAttribute(attribute, value);
     }
   })

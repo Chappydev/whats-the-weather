@@ -110,6 +110,20 @@ h2 {
   height: 60px;
 }
 
+#user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  .user-img {
+    height: 80%;
+    width: auto;
+  }
+}
+
+.user-img {
+  border-radius: 100%;
+}
+
 #game-option-container {
   display: flex;
   flex-direction: column;

@@ -22,11 +22,13 @@ onAuthStateChanged(auth, async (user) => {
   console.log(user);
   if (user) {
     // display user-only stuff on home page
+    console.log(user.photoURL);
+    console.log(user.email, user.displayName, user.photoURL);
     const headerSignIn = header.querySelector('#sign-in-btn');
     if (headerSignIn) {
-      header.replaceChild(userInfoDisplay(), headerSignIn);
+      header.replaceChild(userInfoDisplay(user), headerSignIn);
     } else {
-      header.appendChild(userInfoDisplay());
+      header.appendChild(userInfoDisplay(user));
     }
     playBtn.removeAttribute("disabled");
     // TODO: make game-start button work when signed in

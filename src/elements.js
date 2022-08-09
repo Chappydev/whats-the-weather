@@ -27,12 +27,11 @@ function signOutBtn() {
   return btn;
 }
 
-// TODO: add parameter(s) for data needed (display name, etc.)
-//       and add that to the appropriate elements.
-function userInfoDisplay() {
+function userInfoDisplay({ displayName, photoURL }) {
   return appendTo(
     makeElement('div', '', '#user-info'), 
-      makeElement('div', '', '.display-name'), 
+      makeElement('div', displayName, '.display-name'), 
+      makeElement('img', '', 'referrerpolicy=no-referrer', `src=${photoURL}`, '.user-img'),
       signOutBtn()
   );
 }

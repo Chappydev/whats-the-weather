@@ -1,7 +1,6 @@
 export { appendTo, makeElement };
 
 function appendTo(parent, ...children) {
-  console.log(children);
   children.forEach((child) => {
     parent.appendChild(child);
   });

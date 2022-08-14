@@ -34,14 +34,14 @@ const endGame = function(e) {
   homePage.hidden = false;
 }
 
+let unsubFromUser = undefined;
+
 endGameBtn.addEventListener('click', endGame);
 
 onAuthStateChanged(auth, async (user) => {
   console.log(user);
   if (user) {
     // display user-only stuff on home page
-    console.log(user.photoURL);
-    console.log(user.email, user.displayName, user.photoURL);
     const headerSignIn = header.querySelector('#sign-in-btn');
     if (headerSignIn) {
       header.replaceChild(userInfoDisplay(user), headerSignIn);
@@ -53,7 +53,7 @@ onAuthStateChanged(auth, async (user) => {
     // TODO: make game-start button work when signed in
 
     const userDocRef = doc(db, 'users', user.uid); 
-    const unsubFromUser = onSnapshot(userDocRef, (doc) => {
+    unsubFromUser = onSnapshot(userDocRef, (doc) => {
       console.log("Current data: ", doc.data());
       if (!doc.data()) {
         setDoc(userDocRef, {
@@ -64,6 +64,9 @@ onAuthStateChanged(auth, async (user) => {
 
   } else {
     // Only offer default info and encourage them to sign in
+    if (unsubFromUser) {
+      unsubFromUser();
+    }
     const headerUserInfo = header.querySelector('#user-info');
     if (headerUserInfo) {
       header.replaceChild(signInBtn(), headerUserInfo);
